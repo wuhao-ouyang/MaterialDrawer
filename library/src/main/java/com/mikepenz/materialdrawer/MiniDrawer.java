@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.interfaces.Minifiable;
 import com.mikepenz.materialize.util.UIUtils;
 
 import java.util.List;
@@ -273,6 +274,8 @@ public class MiniDrawer {
             MiniProfileDrawerItem mpdi = new MiniProfileDrawerItem((ProfileDrawerItem) drawerItem);
             mpdi.withEnabled(mEnableProfileClick);
             return mpdi;
+        } else if (drawerItem instanceof Minifiable) {
+            return ((Minifiable) drawerItem).generateMiniDrawerItem();
         }
         return null;
     }
@@ -288,6 +291,8 @@ public class MiniDrawer {
             return PROFILE;
         } else if (drawerItem instanceof MiniDrawerItem) {
             return ITEM;
+        } else if (drawerItem != null) {
+            return drawerItem.getType();
         }
         return -1;
     }
